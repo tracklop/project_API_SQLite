@@ -1,0 +1,204 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "version": "1.0.0",
+    "title": "SQLite API Project",
+    "description": "SqLite Api Project",
+    "termsOfService": "",
+    "contact": {
+      "name": "Sébastien Gosselin, Hugo Otuszewski, Théo Saelens, Pierre-Emmanuel De Clercq"
+    },
+    "license": {
+      "name": "",
+      "url": ""
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local development server"
+    }
+  ],
+  "paths": {
+    "/login": {
+      "post": {
+        "summary": "Authenticate a member",
+        "tags": ["Members"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "mail": {
+                    "type": "string",
+                    "description": "The email address of the member."
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "The password of the member."
+                  }
+                },
+                "required": ["mail", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "A message indicating that the member has been successfully authenticated."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "An error message indicating that the password is incorrect."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A message indicating that the authentication failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "An error message indicating that the member was not found."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A message indicating that the authentication failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "An error message indicating that the server encountered an error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A message indicating that the authentication failed."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players": {
+      "get": {
+        "summary": "Get all players",
+        "tags": ["Members"],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Member"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Member": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the member"
+          },
+          "mail": {
+            "type": "string",
+            "description": "The email address of the member"
+          },
+          "role": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the role"
+              }
+            }
+          }
+        },
+        "required": ["name", "mail", "role"]
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "An error message"
+          },
+          "message": {
+            "type": "string",
+            "description": "A message indicating the cause of the error"
+          }
+        },
+        "required": ["error", "message"]
+      }
+    }
+  }
+}
