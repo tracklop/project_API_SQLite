@@ -123,37 +123,6 @@
           }
         }
       }
-    },
-    "/players": {
-      "get": {
-        "summary": "Get all players",
-        "tags": ["Members"],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Member"
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components": {
@@ -164,40 +133,8 @@
           "id": {
             "type": "integer",
             "format": "int64"
-          },
-          "name": {
-            "type": "string",
-            "description": "The name of the member"
-          },
-          "mail": {
-            "type": "string",
-            "description": "The email address of the member"
-          },
-          "role": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "The name of the role"
-              }
-            }
           }
-        },
-        "required": ["name", "mail", "role"]
-      },
-      "Error": {
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "An error message"
-          },
-          "message": {
-            "type": "string",
-            "description": "A message indicating the cause of the error"
-          }
-        },
-        "required": ["error", "message"]
+        }
       }
     }
   }
