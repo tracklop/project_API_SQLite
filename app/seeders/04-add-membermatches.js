@@ -4,7 +4,7 @@
 module.exports = {
 	async up(queryInterface, Sequelize) {
 		const members = await queryInterface.sequelize.query(
-			"SELECT id, mail FROM member"
+			"SELECT id, mail FROM Members"
 		);
 		const membersMap = {};
 
@@ -13,7 +13,7 @@ module.exports = {
 		});
 
 		const matches = await queryInterface.sequelize.query(
-			"SELECT id, adversaire FROM match"
+			"SELECT id, adversaire FROM Matches"
 		);
 		const matchesMap = {};
 
@@ -22,7 +22,7 @@ module.exports = {
 		});
 
 		await queryInterface.bulkInsert(
-			"membermatch",
+			"MembersMatches",
 			[
 				{
 					memberId: membersMap["john.doe1@example.com"],
@@ -54,6 +54,6 @@ module.exports = {
 	},
 
 	async down(queryInterface, Sequelize) {
-		await queryInterface.bulkDelete("membermatch", null, {});
+		await queryInterface.bulkDelete("MembersMatches", null, {});
 	},
 };

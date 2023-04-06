@@ -4,7 +4,7 @@
 module.exports = {
 	async up(queryInterface, Sequelize) {
 		await queryInterface.bulkInsert(
-			"match",
+			"Matches",
 			[
 				{
 					adversaire: "Club de Lille",
@@ -26,6 +26,6 @@ module.exports = {
 	},
 
 	async down(queryInterface, Sequelize) {
-		await queryInterface.bulkDelete("match", null, {});
+		await queryInterface.bulkDelete("Matches", null, {});
 	},
 };

@@ -42,7 +42,7 @@ npx sequelize-cli db:migrate --name <file_name>
 ```
 
 ```sh
-# Annuler toutes le migrations
+# Annuler toutes les migrations
 npx sequelize-cli db:migrate:undo:all
 ```
 
@@ -64,6 +64,6 @@ npx sequelize-cli model:generate --name <file_name> --attributes name:string,mai
 
 ```sh
 # Créer un nouveau seed
-#(⚠️: les seeds sont exécuter par autre alphanumérique. À prendre en compte lors de l'exécution de tous les seeds pour les clé étrangères)
+#(⚠️: les seeds sont exécuter par ordre alphanumérique. À prendre en compte lors de l'exécution de tous les seeds pour les clé étrangères)
 npx sequelize-cli seed:generate --name <file_name>
 ```
