@@ -31,12 +31,10 @@
                 "type": "object",
                 "properties": {
                   "mail": {
-                    "type": "string",
-                    "description": "The email address of the member."
+                    "$ref": "#/components/schemas/Mail"
                   },
                   "password": {
-                    "type": "string",
-                    "description": "The password of the member."
+                    "$ref": "#/components/schemas/Password"
                   }
                 },
                 "required": ["mail", "password"]
@@ -44,39 +42,24 @@
             }
           }
         },
+
         "responses": {
           "200": {
-            "description": "Successful operation",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "A message indicating that the member has been successfully authenticated."
-                    }
-                  }
+                  "$ref": "#/components/schemas/Member"
                 }
               }
             }
           },
           "401": {
-            "description": "Unauthorized",
+            "description": "Not Found",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "description": "An error message indicating that the password is incorrect."
-                    },
-                    "message": {
-                      "type": "string",
-                      "description": "A message indicating that the authentication failed."
-                    }
-                  }
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
@@ -86,16 +69,20 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "description": "An error message indicating that the member was not found."
-                    },
-                    "message": {
-                      "type": "string",
-                      "description": "A message indicating that the authentication failed."
-                    }
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "Error": {
+                    "allOf": [
+                      {
+                        "$ref": "#/components/examples/Status404"
+                      },
+                      {
+                        "value": {
+                          "details": "test"
+                        }
+                      }
+                    ]
                   }
                 }
               }
@@ -106,17 +93,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "description": "An error message indicating that the server encountered an error."
-                    },
-                    "message": {
-                      "type": "string",
-                      "description": "A message indicating that the authentication failed."
-                    }
-                  }
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
@@ -135,6 +112,89 @@
             "format": "int64"
           }
         }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "details": {
+            "type": "string"
+          }
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "properties": {
+          "mail": {
+            "$ref": "#/components/schemas/Mail"
+          },
+          "password": {
+            "$ref": "#/components/schemas/Password"
+          }
+        },
+        "required": ["mail", "password"]
+      },
+      "Mail": {
+        "type": "string",
+        "format": "email",
+        "description": "The email address of the member."
+      },
+      "Password": {
+        "type": "string",
+        "description": "The password of the member."
+      }
+    },
+    "examples": {
+      "Status204": {
+        "value": {
+          "error": "No Content",
+          "details": "The search was successful but there are no results"
+        },
+        "summary": "No Content"
+      },
+      "Status400": {
+        "value": {
+          "error": "Bad Request",
+          "details": "The request is invalid"
+        },
+        "summary": "Invalid request"
+      },
+      "Status401": {
+        "value": {
+          "error": "Unauthorized",
+          "details": "Authentication failed"
+        },
+        "summary": "Authentication failed"
+      },
+      "Status404": {
+        "value": {
+          "error": "Not Found",
+          "details": "The requested resource was not found"
+        },
+        "summary": "Resource not found"
+      },
+      "Status418": {
+        "value": {
+          "error": "I'm a teapot",
+          "details": "Sorry, I cannot brew coffee as I am a teapot"
+        },
+        "summary": "I'm a teapot"
+      },
+      "Status500": {
+        "value": {
+          "error": "Internal Server Error",
+          "details": "An unexpected error occurred"
+        },
+        "summary": "Unexpected error"
+      },
+      "Status503": {
+        "value": {
+          "error": "Service Unavailable",
+          "details": "Sorry, the service is temporarily unavailable"
+        },
+        "summary": "Service Unavailable"
       }
     }
   }
