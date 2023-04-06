@@ -28,21 +28,11 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "mail": {
-                    "$ref": "#/components/schemas/Mail"
-                  },
-                  "password": {
-                    "$ref": "#/components/schemas/Password"
-                  }
-                },
-                "required": ["mail", "password"]
+                "$ref": "#/components/schemas/LoginRequest"
               }
             }
           }
         },
-
         "responses": {
           "200": {
             "description": "OK",
@@ -55,7 +45,7 @@
             }
           },
           "401": {
-            "description": "Not Found",
+            "description": "Unauthorized",
             "content": {
               "application/json": {
                 "schema": {
@@ -100,18 +90,302 @@
           }
         }
       }
+    },
+    "/inscription": {
+      "post": {
+        "summary": "Inscription to a match",
+        "tags": ["Matches"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InscriptionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/desinscription": {
+      "delete": {
+        "summary": "Desinscription to a match",
+        "tags": ["Matches"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DesinscriptionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/matches": {
+      "put": {
+        "summary": "Update one or more matches",
+        "tags": ["Matches"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "matches": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Match"
+                    }
+                  }
+                },
+                "required": ["matches"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/News": {
+      "get": {
+        "summary": "Get all news",
+        "tags": ["News"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/News"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new news",
+        "tags": ["News"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/News"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
-      "Member": {
+      "Match": {
         "type": "object",
         "properties": {
           "id": {
             "type": "integer",
             "format": "int64"
+          },
+          "adversaire": {
+            "type": "string",
+            "description": "The name of the opposing team."
+          },
+          "score": {
+            "type": "integer",
+            "description": "The score of the team."
+          },
+          "score_adversaire": {
+            "type": "integer",
+            "description": "The score of the opposing team."
           }
         }
+      },
+      "MemberMatch": {
+        "type": "object",
+        "properties": {
+          "memberId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The id of the member."
+          },
+          "matchId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The id of the match."
+          }
+        },
+        "required": ["memberId", "matchId"]
       },
       "Error": {
         "type": "object",
@@ -124,26 +398,111 @@
           }
         }
       },
+      "Member": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "InscriptionRequest": {
+        "type": "object",
+        "properties": {
+          "memberId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The id of the member."
+          },
+          "matchId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The id of the match."
+          }
+        },
+        "required": ["memberId", "matchId"]
+      },
+      "DesinscriptionRequest": {
+        "type": "object",
+        "properties": {
+          "memberId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The id of the member."
+          },
+          "matchId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The id of the match."
+          }
+        },
+        "required": ["memberId", "matchId"]
+      },
+      "Success": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Indicates whether the operation was successful."
+          }
+        }
+      },
       "LoginRequest": {
         "type": "object",
         "properties": {
           "mail": {
-            "$ref": "#/components/schemas/Mail"
+            "type": "string",
+            "description": "The mail of the member."
           },
           "password": {
-            "$ref": "#/components/schemas/Password"
+            "type": "string",
+            "description": "The password of the member."
           }
         },
         "required": ["mail", "password"]
       },
-      "Mail": {
-        "type": "string",
-        "format": "email",
-        "description": "The email address of the member."
+      "News": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The ID of the news article."
+          },
+          "title": {
+            "type": "string",
+            "description": "The title of the news article."
+          },
+          "content": {
+            "type": "string",
+            "description": "The content of the news article."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date and time the news article was created."
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date and time the news article was last updated."
+          }
+        }
       },
-      "Password": {
-        "type": "string",
-        "description": "The password of the member."
+      "NewsRequest": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "The title of the news article."
+          },
+          "content": {
+            "type": "string",
+            "description": "The content of the news article."
+          }
+        },
+        "required": ["title", "content"]
       }
     },
     "examples": {
@@ -159,14 +518,7 @@
           "error": "Bad Request",
           "details": "The request is invalid"
         },
-        "summary": "Invalid request"
-      },
-      "Status401": {
-        "value": {
-          "error": "Unauthorized",
-          "details": "Authentication failed"
-        },
-        "summary": "Authentication failed"
+        "Summary": "Invalid request body"
       },
       "Status404": {
         "value": {
@@ -175,26 +527,36 @@
         },
         "summary": "Resource not found"
       },
-      "Status418": {
-        "value": {
-          "error": "I'm a teapot",
-          "details": "Sorry, I cannot brew coffee as I am a teapot"
+      "InscriptionRequest": {
+        "type": "object",
+        "properties": {
+          "matchId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The ID of the match to subscribe to."
+          }
         },
-        "summary": "I'm a teapot"
+        "required": ["matchId"]
       },
-      "Status500": {
-        "value": {
-          "error": "Internal Server Error",
-          "details": "An unexpected error occurred"
+      "DesinscriptionRequest": {
+        "type": "object",
+        "properties": {
+          "matchId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The ID of the match to unsubscribe from."
+          }
         },
-        "summary": "Unexpected error"
+        "required": ["matchId"]
       },
-      "Status503": {
-        "value": {
-          "error": "Service Unavailable",
-          "details": "Sorry, the service is temporarily unavailable"
-        },
-        "summary": "Service Unavailable"
+      "Success": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "A message confirming the success of the request."
+          }
+        }
       }
     }
   }
