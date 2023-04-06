@@ -2,7 +2,7 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
 	const Role = sequelize.define(
-		"role",
+		"Role",
 		{
 			name: {
 				unique: true,
@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
 	);
 
 	Role.associate = (models) => {
-		Role.hasMany(models.member, {
+		Role.hasMany(models.Member, {
 			foreignKey: "roleId",
 			as: "members",
 		});

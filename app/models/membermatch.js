@@ -1,27 +1,8 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-	// class membermatch extends Model {
-	//   /**
-	//    * Helper method for defining associations.
-	//    * This method is not a part of Sequelize lifecycle.
-	//    * The `models/index` file will call this method automatically.
-	//    */
-	//   static associate(models) {
-	//     // define association here
-	//   }
-	// }
-	// membermatch.init({
-	//   memberId: DataTypes.INTEGER,
-	//   matchId: DataTypes.INTEGER
-	// }, {
-	//   sequelize,
-	//   modelName: 'membermatch',
-	// });
-	// return membermatch;
-
 	const MemberMatch = sequelize.define(
-		"membermatch",
+		"MemberMatch",
 		{
 			memberId: {
 				alllowNull: false,
@@ -45,12 +26,12 @@ module.exports = (sequelize, DataTypes) => {
 	);
 
 	MemberMatch.associate = (models) => {
-		MemberMatch.belongsTo(models.member, {
+		MemberMatch.belongsTo(models.Member, {
 			foreignKey: "memberId",
 			onDelete: "CASCADE",
 		});
 
-		MemberMatch.belongsTo(models.match, {
+		MemberMatch.belongsTo(models.Match, {
 			foreignKey: "matchId",
 			onDelete: "CASCADE",
 		});

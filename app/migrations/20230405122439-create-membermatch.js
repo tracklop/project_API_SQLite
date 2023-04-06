@@ -3,14 +3,14 @@
 module.exports = {
 	async up(queryInterface, Sequelize) {
 		await queryInterface.createTable(
-			"membermatch",
+			"MembersMatches",
 			{
 				memberId: {
 					allowNull: false,
 					primaryKey: true,
 					type: Sequelize.INTEGER,
 					references: {
-						model: "member",
+						model: "Members",
 						key: "id",
 					},
 					onUpdate: "CASCADE",
@@ -21,7 +21,7 @@ module.exports = {
 					primaryKey: true,
 					type: Sequelize.INTEGER,
 					references: {
-						model: "match",
+						model: "Matches",
 						key: "id",
 					},
 					onUpdate: "CASCADE",
@@ -47,6 +47,6 @@ module.exports = {
 		);
 	},
 	async down(queryInterface, Sequelize) {
-		await queryInterface.dropTable("membermatch");
+		await queryInterface.dropTable("MembersMatches");
 	},
 };

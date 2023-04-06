@@ -1,11 +1,9 @@
 "use strict";
-
 const bcrypt = require("bcrypt");
-
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
 	const Member = sequelize.define(
-		"member",
+		"Member",
 		{
 			name: {
 				alllowNull: false,
@@ -29,13 +27,13 @@ module.exports = (sequelize, DataTypes) => {
 	);
 
 	Member.associate = (models) => {
-		Member.belongsTo(models.role, {
+		Member.belongsTo(models.Role, {
 			foreignKey: "roleId",
 			as: "role",
 		});
 
-		Member.belongsToMany(models.match, {
-			through: models.membermatch,
+		Member.belongsToMany(models.Match, {
+			through: models.MemberMatch,
 			foreignKey: "memberId",
 			otherKey: "matchId",
 			as: "matches",
@@ -47,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
 		member.password = await bcrypt.hash(member.password, salt);
 	});
 
-	Member.prototype.checkPassword = async (password) => {
+	Member.prototype.checkPassword = async function (password) {
 		return await bcrypt.compare(password, this.password);
 	};
 

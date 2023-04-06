@@ -8,7 +8,7 @@ const { QueryInterface } = require("sequelize");
 module.exports = {
 	async up(queryInterface, Sequelize) {
 		const roles = await queryInterface.sequelize.query(
-			"SELECT id, name FROM role"
+			"SELECT id, name FROM Roles"
 		);
 		const rolesMap = {};
 
@@ -17,7 +17,7 @@ module.exports = {
 		});
 
 		await queryInterface.bulkInsert(
-			"member",
+			"Members",
 			[
 				{
 					name: "John Doe 1",
@@ -65,6 +65,6 @@ module.exports = {
 	},
 
 	async down(queryInterface, Sequelize) {
-		await queryInterface.bulkDelete("member", null, {});
+		await queryInterface.bulkDelete("Members", null, {});
 	},
 };
