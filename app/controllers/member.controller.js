@@ -1,33 +1,65 @@
 // NOTE - Imports
+const jwt = require("jsonwebtoken");
+const authConfig = require("../config/auth.config");
 const { Member, Role } = require("../models");
 
 // NOTE - Connexion
-const Login = (req, res) => {
+const Authentication = (req, res) => {
 	const { mail, password } = req.body;
 
-	Member.findOne({ where: { mail } })
+	Member.findOne({
+		where: { mail },
+		include: {
+			model: Role,
+			as: "role",
+		},
+	})
 		.then((member) => {
 			if (!member) {
-				res.status(404).send({
+				return res.status(404).send({
 					error: "Not Found",
 					message: "Member not found",
 				});
-				return;
 			}
 
 			member
 				.checkPassword(password)
 				.then((isPasswordValid) => {
-					if (isPasswordValid) {
-						res.status(200).send({
-							message: "Login successful",
-						});
-					} else {
-						res.status(401).send({
+					if (!isPasswordValid) {
+						return res.status(401).send({
 							error: "Unauthorized",
 							message: "Invalid password",
 						});
 					}
+
+					const accessToken = jwt.sign(
+						{
+							id: member.id,
+							role: member.role.name,
+						},
+						authConfig.secret,
+						{
+							expiresIn: authConfig.accessTokenExpiration,
+						}
+					);
+
+					const refreshToken = jwt.sign(
+						{
+							id: member.id,
+							role: member.role.name,
+						},
+						authConfig.secret,
+						{
+							expiresIn: authConfig.refreshTokenExpiration,
+						}
+					);
+
+					res.set({
+						Authorization: `Bearer ${accessToken}`,
+						"x-refresh-token": refreshToken,
+					});
+
+					res.status(200).send({ message: "Authenticated successfully" });
 				})
 				.catch((error) => {
 					res.status(500).send({
@@ -70,6 +102,6 @@ const GetPlayers = (req, res) => {
 
 // NOTE - Exporting the functions
 module.exports = {
-	Login,
+	Authentication,
 	GetPlayers,
 };

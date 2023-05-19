@@ -5,11 +5,10 @@ const router = express.Router();
 // SECTION[epic=routes] - Route settings
 
 // NOTE - Imports controllers
-const MemberController = require("../controllers/member.controller");
+const TeapotController = require("../controllers/teapot.controller");
 
 // NOTE - API route
-router.post("/auth", MemberController.Authentication);
-router.get("/players", MemberController.GetPlayers);
+router.all(/coffee/i, TeapotController.Teapot);
 
 // NOTE - Exporting route
 module.exports = router;
